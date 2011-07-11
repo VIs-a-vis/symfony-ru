@@ -2,7 +2,7 @@
 <div class="column_02">
 
   <div class="box_title">
-    <h1 class="title_01">Validation</h1>
+    <h1 class="title_01">Валидация</h1>
   </div>
   
   
@@ -12,19 +12,15 @@
     
     
     <div class="section" id="validation">
-      <span id="index-0"></span><h1>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
-      <p>Validation is a very common task in web applications. Data entered in forms
-	needs to be validated. Data also needs to be validated before it is written
-	into a database or passed to a web service.</p>
-      <p>Symfony2 ships with a <a class="reference external" href="https://github.com/symfony/Validator">Validator</a> component that makes this task easy and transparent.
-	This component is based on the <a class="reference external" href="http://jcp.org/en/jsr/detail?id=303">JSR303 Bean Validation specification</a>. What?
-	A Java specification in PHP? You heard right, but it's not as bad as it sounds.
-	Let's look at how it can be used in PHP.</p>
+      <span id="index-0"></span><h1>Валидация<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h1>
+      <p>Валидация очень частая задача в веб приложениях. Данные введеные в форму должны быть валидированы. Данные также должны пройти валидацию перед записью в базу данных или передачи в web-службу.</p>
+      <p>Symfony2 поставляется с компонентом <a class="reference external" href="https://github.com/symfony/Validator">Validator</a>, который выполняет эту задачу легко и прозрачно.
+	Этот компонент основан на спецификации <a class="reference external" href="http://jcp.org/en/jsr/detail?id=303">JSR303 Bean Validation specification</a>. Что?
+	Спецификация Java в PHP? Вы не ослышались, но это не так плохо, как кажется.
+	Давайте посмотрим, как это можно использовать в PHP.</p>
       <div class="section" id="the-basics-of-validation">
-	<h2>The Basics of Validation<a class="headerlink" href="#the-basics-of-validation" title="Permalink to this headline">¶</a></h2>
-	<p>The best way to understand validation is to see it in action. To start, suppose
-	  you've created a plain-old-PHP object that you need to use somewhere in
-	  your application:</p>
+	<h2>Основы валидации.<a class="headerlink" href="#the-basics-of-validation" title="Permalink to this headline">¶</a></h2>
+	<p>Лучший способ понять валидацию - это увидеть ее в действии. Для начала предположим, что вы создали старый-добрый PHP объект, который необходимо использовать где-нибудь в вашем приложении:</p>
 	<div class="highlight-php"><div class="highlight"><pre><span class="c1">// Acme/BlogBundle/Author.php</span>
 <span class="k">class</span> <span class="nc">Author</span>
 <span class="p">{</span>
@@ -32,13 +28,7 @@
 <span class="p">}</span>
 	  </pre></div>
 	</div>
-	<p>So far, this is just an ordinary class that serves some purpose inside your
-	  application. The goal of validation is to tell you whether or not the data
-	  of an object is valid. For this to work, you need to configure a list of
-	  rules (called <a class="reference internal" href="#validation-constraints"><em>constraints</em></a>) that the object
-	  must follow in order to be valid. These rules can be specified via a number
-	  of different formats (YAML, XML, annotations, or PHP). To guarantee that
-	  the <tt class="docutils literal"><span class="pre">$name</span></tt> property is not empty, add the following:</p>
+	<p>Пока это всего лишь обычный класс, созданный с какой-то целью. Цель валидации в том, чтобы сообщить вам, являются ли данные объекта валидными или же нет. Чтобы это заработало, вы должны сконфигурировать список правил (называемых <a class="reference internal" href="#validation-constraints"><em>ограничениями</em></a> (constraints)) которым должен следовать объект, что бы быть валидным. Эти правила могут быть определены с помощью различных форматов (YML, XML, аннотации или PHP). Чтобы гарантировать, что свойство <tt class="docutils literal"><span class="pre">$name</span></tt> не пустое, добавьте следующее:</p>
 	<div class="configuration-block jsactive clearfix">
 	  <ul class="simple" style="height: 148px; ">
 	    <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># Acme/BlogBundle/Resources/config/validation.yml</span>
@@ -90,18 +80,14 @@
 	  </ul>
 	</div>
 	<div class="admonition-wrapper">
-	  <div class="tip"></div><div class="admonition admonition-tip"><p class="first admonition-title">Tip</p>
-	    <p class="last">Protected and private properties can also be validated, as well as "getter"
-	      methods (see <cite>validator-constraint-targets</cite>).</p>
+	  <div class="tip"></div><div class="admonition admonition-tip"><p class="first admonition-title">Примечание</p>
+	    <p class="last">Protected и private свойства также могут быть валидированы, как геттеры (см. <cite>цели-ограничения-валидатора</cite>).</p>
 	</div></div>
 	<div class="section" id="using-the-validator-service">
-	  <span id="index-1"></span><h3>Using the <tt class="docutils literal"><span class="pre">validator</span></tt> Service<a class="headerlink" href="#using-the-validator-service" title="Permalink to this headline">¶</a></h3>
-	  <p>To actually validate an <tt class="docutils literal"><span class="pre">Author</span></tt> object, use the <tt class="docutils literal"><span class="pre">validate</span></tt> method
-	    on the <tt class="docutils literal"><span class="pre">validator</span></tt> service (class <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/Validator.html" title="Symfony\Component\Validator\Validator"><span class="pre">Validator</span></a></tt>).
-	    The job of the <tt class="docutils literal"><span class="pre">validator</span></tt> is easy: to read the constraints (i.e. rules)
-	    of a class and verify whether or not the data on the object satisfies those
-	    constraints. If validation fails, an array of errors is returned. Take this
-	    simple example from inside a controller:</p>
+	  <span id="index-1"></span><h3>Использование <tt class="docutils literal"><span class="pre">validator</span></tt> Service<a class="headerlink" href="#using-the-validator-service" title="Permalink to this headline">¶</a></h3>
+	  <p>Чтобы на самом деле проверить объект <tt class="docutils literal"><span class="pre">Author</span></tt> используется метод <tt class="docutils literal"><span class="pre">validate</span></tt> в сервисе <tt class="docutils literal"><span class="pre">validator</span></tt> (класс <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/Validator.html" title="Symfony\Component\Validator\Validator"><span class="pre">Validator</span></a></tt>).
+	    Работа <tt class="docutils literal"><span class="pre">валидатора</span></tt> проста: прочесть ограничения (т.е. правила)
+	    класса и проверить удовлетвореют ли данные этим правилам или нет. Если валадация не пройдена, возвращается массив ошибок. Рассмотрим этот простой пример контроллера:</p>
 	  <div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 <span class="c1">// ...</span>
 
@@ -121,21 +107,13 @@
 <span class="p">}</span>
 	    </pre></div>
 	  </div>
-	  <p>If the <tt class="docutils literal"><span class="pre">$name</span></tt> property is empty, you will see the following error
-	    message:</p>
+	  <p>Если свойство <tt class="docutils literal"><span class="pre">$name</span></tt> пусто, вы увидите следующее сообщение об ошибке:</p>
 	  <div class="highlight-text"><div class="highlight"><pre>Acme\BlogBundle\Author.name:
     This value should not be blank
 	    </pre></div>
 	  </div>
-	  <p>If you insert a value into the <tt class="docutils literal"><span class="pre">name</span></tt> property, the happy success message
-	    will appear.</p>
-	  <p>Each validation error (called a "constraint violation"), is represented by
-	    a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/ConstraintViolation.html" title="Symfony\Component\Validator\ConstraintViolation"><span class="pre">ConstraintViolation</span></a></tt> object, which
-	    holds a message describing the error. Moreover, the <tt class="docutils literal"><span class="pre">validate</span></tt> method returns
-	    a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/ConstraintViolationList.html" title="Symfony\Component\Validator\ConstraintViolationList"><span class="pre">ConstraintViolationList</span></a></tt> object,
-	    which acts like an array. That's a long way of saying that you can use the
-	    errors returned by <tt class="docutils literal"><span class="pre">validate</span></tt> in more advanced ways. Start by rendering
-	    a template and passing in the <tt class="docutils literal"><span class="pre">$errorList</span></tt> variable:</p>
+	  <p>Если в это свойство <tt class="docutils literal"><span class="pre">name</span></tt> вставить значение, то вернется сообщение об успехе.</p>
+	  <p>Каждая ошибка валидации (называющаяся "нарушение ограничения") представлена объектом <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/ConstraintViolation.html" title="Symfony\Component\Validator\ConstraintViolation"><span class="pre">ConstraintViolation</span></a></tt> , в котором хранится сообщение с описанием ошибки. Кроме того, метод <tt class="docutils literal"><span class="pre">validate</span></tt> возвращает объект <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/2.0/Symfony/Component/Validator/ConstraintViolationList.html" title="Symfony\Component\Validator\ConstraintViolationList"><span class="pre">ConstraintViolationList</span></a></tt>, который действует как массив. Это было долгое объяснение того, что вы можете использовать ошибки возвращаемые <tt class="docutils literal"><span class="pre">validate</span></tt> более продвинутыми способами. Начнем с рендеринга шаблона и присвоения массива ошибок переменной <tt class="docutils literal"><span class="pre">$errorList</span></tt>:</p>
 	  <div class="highlight-php"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$errorList</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">'AcmeBlogBundle:Author:validate.html.twig'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
         <span class="s1">'errorList'</span> <span class="o">=&gt;</span> <span class="nv">$errorList</span><span class="p">,</span>
@@ -145,7 +123,7 @@
 <span class="p">}</span>
 	    </pre></div>
 	  </div>
-	  <p>Inside the template, you can output the list of errors exactly as needed:</p>
+	  <p>В шаблоне вы можете вывести ошибки так, как хотите:</p>
 	  <div class="configuration-block jsactive clearfix">
 	    <ul class="simple" style="height: 202px; ">
 	      <li class="selected"><em><a href="#">Twig</a></em><div class="highlight-html+jinja" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c">{# src/Acme/BlogBundle/Resources/views/Author/validate.html.twig #}</span>
@@ -174,13 +152,9 @@
 	  </div>
 	</div>
 	<div class="section" id="validation-and-forms">
-	  <span id="index-2"></span><h3>Validation and Forms<a class="headerlink" href="#validation-and-forms" title="Permalink to this headline">¶</a></h3>
-	  <p>The <tt class="docutils literal"><span class="pre">validator</span></tt> service can be used at any time to validate any object.
-	    In reality, however, you'll usually work with the <tt class="docutils literal"><span class="pre">validator</span></tt> indirectly
-	    via the <tt class="docutils literal"><span class="pre">Form</span></tt> class. The <tt class="docutils literal"><span class="pre">Form</span></tt> class uses the <tt class="docutils literal"><span class="pre">validator</span></tt> service
-	    internally to validate the underlying object after values have been submitted
-	    and bound. The constraint violations on the object are converted into <tt class="docutils literal"><span class="pre">FieldError</span></tt>
-	    objects that can then be displayed with your form:</p>
+	  <span id="index-2"></span><h3>Валидация и формы<a class="headerlink" href="#validation-and-forms" title="Permalink to this headline">¶</a></h3>
+	  <p>Сервис <tt class="docutils literal"><span class="pre">validator</span></tt> может быть использован в любое время для проверки любого объекта.
+	    Однако в действительности, вы обычно будете работать с <tt class="docutils literal"><span class="pre">валидатором</span></tt> через класс <tt class="docutils literal"><span class="pre">Form</span></tt>. Класс <tt class="docutils literal"><span class="pre">Form</span></tt> использует сервис <tt class="docutils literal"><span class="pre">validator</span></tt> внутренне для проверки объекта после того, как данные были отправлены и связаны. Нарушения ограничений объекта преобразуются в объекты <tt class="docutils literal"><span class="pre">FieldError</span></tt>, которые затем могут отображаться с вашей формой:</p>
 	  <div class="highlight-php"><div class="highlight"><pre><span class="nv">$author</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Acme\BlogBundle\Author</span><span class="p">();</span>
 <span class="nv">$form</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Acme\BlogBundle\AuthorForm</span><span class="p">(</span><span class="s1">'author'</span><span class="p">,</span> <span class="nv">$author</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'validator'</span><span class="p">));</span>
 <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">bind</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'request'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'customer'</span><span class="p">));</span>
@@ -193,13 +167,12 @@
 <span class="p">}</span>
 	    </pre></div>
 	  </div>
-	  <p>For more information, see the <a class="reference internal" href="forms.html"><em>Forms</em></a> chapter.</p>
+	  <p>Для большей информации, смотрите главу <a class="reference internal" href="forms.html"><em>Forms</em></a>.</p>
 	</div>
       </div>
       <div class="section" id="configuration">
-	<span id="index-3"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-	<p>To use the Symfony2 validator, ensure that it's enabled in your application
-	  configuration:</p>
+	<span id="index-3"></span><h2>Конфигурация<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+	<p>Для использования Symfony2 валидатора, убедитесь, что он включен в кофигурации вашего приложения:</p>
 	<div class="configuration-block jsactive clearfix">
 	  <ul class="simple" style="height: 112px; ">
 	    <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
@@ -226,35 +199,25 @@
 	  </ul>
 	</div>
 	<div class="admonition-wrapper">
-	  <div class="note"></div><div class="admonition admonition-note"><p class="first admonition-title">Note</p>
-	    <p class="last">The <tt class="docutils literal"><span class="pre">annotations</span></tt> configuration needs to be set to <tt class="docutils literal"><span class="pre">true</span></tt> only if
-	      you're mapping constraints via annotations.</p>
+	  <div class="note"></div><div class="admonition admonition-note"><p class="first admonition-title">Примечание</p>
+	    <p class="last">Конфигурация <tt class="docutils literal"><span class="pre">аннотаций</span></tt> должна быть установлена в значение <tt class="docutils literal"><span class="pre">true</span></tt> , только тогда, когда вы отображаете ограничения с помощью аннотаций.</p>
 	</div></div>
       </div>
       <div class="section" id="constraints">
-	<span id="validation-constraints"></span><span id="index-4"></span><h2>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
-	<p>The <tt class="docutils literal"><span class="pre">validator</span></tt> is designed to validate objects against <em>constraints</em> (i.e.
-	  rules). In order to validate an object, simply map one or more constraints
-	  to its class and then pass it to the <tt class="docutils literal"><span class="pre">validator</span></tt> service.</p>
-	<p>A constraint is simply a PHP object that makes an assertive statement. In
-	  real life, a constraint could be: "The cake must not be burned". In Symfony2,
-	  constraints are similar: they are assertions that a condition is true. Given
-	  a value, a constraint will tell you whether or not that value adheres to
-	  the rules of the constraint.</p>
+	<span id="validation-constraints"></span><span id="index-4"></span><h2>Ограничения<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h2>
+	<p><tt class="docutils literal"><span class="pre">Валидатор</span></tt> разработан для проверки объектов на соответствия <em>ограничениям</em> (т.е.
+	  правилам). Для валидации объекта, просто представьте одно или более ограничений в своем классе, а затем передайте их сервису <tt class="docutils literal"><span class="pre">validator</span></tt>.</p>
+	<p>Ограничение это просто PHP объект, которое представляется в виде жесткого заявления. В реальной жизни, ограничение может быть представлено в виде: "Пирог не должен быть подгорелым". В Symfony2 ограничения похожи: они являются утверждениями, что условие истинно. Получив значение, ограничение сообщает сообщит вам, придерживается ли значение правилам ограничений.</p>
 	<div class="section" id="supported-constraints">
-	  <h3>Supported Constraints<a class="headerlink" href="#supported-constraints" title="Permalink to this headline">¶</a></h3>
-	  <p>Symfony2 packages a large number of the most commonly-needed constraints.
-	    The full list of constraints with details is available in the
-	    <a class="reference internal" href="../reference/constraints.html"><em>constraints reference section</em></a>.</p>
+	  <h3>Поддерживаемые ограничения<a class="headerlink" href="#supported-constraints" title="Permalink to this headline">¶</a></h3>
+	  <p>Пакеты Symfony2 содержат большое число наиболее часто необходимых ограничений.
+	    Полный список ограничений с различными деталями доступен в
+	    <a class="reference internal" href="../reference/constraints.html"><em>справочном разделе ограничений</em></a>.</p>
 	</div>
 	<div class="section" id="constraint-configuration">
-	  <span id="index-5"></span><h3>Constraint Configuration<a class="headerlink" href="#constraint-configuration" title="Permalink to this headline">¶</a></h3>
-	  <p>Some constraints, like <a class="reference internal" href="../reference/constraints/NotBlank.html"><em>NotBlank</em></a>,
-	    are simple whereas others, like the <a class="reference internal" href="../reference/constraints/Choice.html"><em>Choice</em></a>
-	    constraint, have several configuration options available. The available
-	    options are public properties on the constraint and each can be set by passing
-	    an options array to the constraint. Suppose that the <tt class="docutils literal"><span class="pre">Author</span></tt> class has
-	    another property, <tt class="docutils literal"><span class="pre">gender</span></tt> that can be set to either "male" or "female":</p>
+	  <span id="index-5"></span><h3>Конфигурация ограничений<a class="headerlink" href="#constraint-configuration" title="Permalink to this headline">¶</a></h3>
+	  <p>Некоторые ограничения, такие как <a class="reference internal" href="../reference/constraints/NotBlank.html"><em>NotBlank</em></a>просты, в то время как другие, например <a class="reference internal" href="../reference/constraints/Choice.html"><em>Choice</em></a>
+	    имеют несколько вариантов конфигураций. Доступные опции являются public свойствами ограничения и каждый может быть установлен путем передачи массива опций ограничению. Предположим, что класс <tt class="docutils literal"><span class="pre">Author</span></tt> содержит другое свойство - <tt class="docutils literal"><span class="pre">пол</span></tt>, которое быть установлено в "male" или "female":</p>
 	  <div class="configuration-block jsactive clearfix">
 	    <ul class="simple" style="height: 148px; ">
 	      <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># Acme/BlogBundle/Resources/config/validation.yml</span>
@@ -317,10 +280,7 @@
 	      </li>
 	    </ul>
 	  </div>
-	  <p>The options of a constraint can always be passed in as an array. Some constraints
-	    also allow you to pass the value of one, "default", option to the constraint
-	    in place of the array. In the case of the <tt class="docutils literal"><span class="pre">Choice</span></tt> constraint, the <tt class="docutils literal"><span class="pre">choices</span></tt>
-	    options can be specified in this way.</p>
+	  <p>Опции ограничений, могут быть всегда переданы в виде массива. Некоторые ограничения также позволяют вам передать значение одной, "default" опции, вместо массива. В случае с ограничением <tt class="docutils literal"><span class="pre">Choice</span></tt>, опции могут быть заданы следующим способом.</p>
 	  <div class="configuration-block jsactive clearfix">
 	    <ul class="simple" style="height: 148px; ">
 	      <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># Acme/BlogBundle/Resources/config/validation.yml</span>
@@ -374,22 +334,16 @@
 	      </li>
 	    </ul>
 	  </div>
-	  <p>Be sure not to let the two different methods of specifying options confuse
-	    you. If you're unsure, either check the API documentation for the constraint
-	    or play it safe by always passing in an array of options (the first method
-	    shown above).</p>
+	  <p>Не допускайте, того, чтобы два различных метода указания опций сбивало вас с толку. Если вы не уверены, обратитесь к документации API для ограничений или будьте осторожны, всегда передавая массив опций (первый метод, показанный выше).</p>
 	</div>
       </div>
       <div class="section" id="constraint-targets">
-	<span id="validator-constraint-targets"></span><span id="index-6"></span><h2>Constraint Targets<a class="headerlink" href="#constraint-targets" title="Permalink to this headline">¶</a></h2>
-	<p>Constraints can be applied to a class property or a public getter method
-	  (e.g. <tt class="docutils literal"><span class="pre">getFullName</span></tt>).</p>
+	<span id="validator-constraint-targets"></span><span id="index-6"></span><h2>Цели ограничений<a class="headerlink" href="#constraint-targets" title="Permalink to this headline">¶</a></h2>
+	<p>Ограничения могут быть применены к свойству класса или к открытому геттер-методу (например <tt class="docutils literal"><span class="pre">getFullName</span></tt>).</p>
 	<div class="section" id="properties">
-	  <span id="index-7"></span><h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
-	  <p>Validating class properties is the most basic validation technique. Symfony2
-	    allows you to validate private, protected or public properties. The next
-	    listing shows you how to configure the properties <tt class="docutils literal"><span class="pre">$firstName</span></tt> and <tt class="docutils literal"><span class="pre">$lastName</span></tt>
-	    of a class <tt class="docutils literal"><span class="pre">Author</span></tt> to have at least 3 characters.</p>
+	  <span id="index-7"></span><h3>Свойства<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+	  <p>Проверка свойств класса является самой основной техникой валидации. Symfony2 позволяет вам проверять private, protected или public свойства. Следующий листинг показывает вам, как конфигурировать свойства <tt class="docutils literal"><span class="pre">$firstName</span></tt> и <tt class="docutils literal"><span class="pre">$lastName</span></tt>
+	    класса <tt class="docutils literal"><span class="pre">Author</span></tt>, чтобы иметь по крайней-мере 3 символа.</p>
 	  <div class="configuration-block jsactive clearfix">
 	    <ul class="simple" style="height: 220px; ">
 	      <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># Acme/BlogBundle/Resources/config/validation.yml</span>
@@ -464,16 +418,11 @@
 	  </div>
 	</div>
 	<div class="section" id="getters">
-	  <span id="index-8"></span><h3>Getters<a class="headerlink" href="#getters" title="Permalink to this headline">¶</a></h3>
-	  <p>Constraints can also be applied to the return value of a method. Symfony2
-	    allows you to add a constraint to any public method whose name starts with
-	    "get" or "is". In this guide, both of these types of methods are referred
-	    to as "getters".</p>
-	  <p>The benefit of this technique is that it allows you to validate your object
-	    dynamically. Depending on the state of your object, the method may return
-	    different values which are then validated.</p>
-	  <p>The next listing shows you how to use the <a class="reference internal" href="../reference/constraints/True.html"><em>True</em></a>
-	    constraint to validate whether a dynamically generated token is correct:</p>
+	  <span id="index-8"></span><h3>Геттеры<a class="headerlink" href="#getters" title="Permalink to this headline">¶</a></h3>
+	  <p>Ограничение также может применено для возвращения значения метода. Symfony2 позволяет вам добавлять ограничение public методам, котрые начинаются с "get" или "is". В этом руководстве, оба этих методов называются "геттерами".</p>
+	  <p>Преимущество этой техники в том, что она позоволяет вам проверить ваш объект динамически. В зависимости от состояния вашего объекта, метод может возвращать различные значения, которые затем проверяются.</p>
+	  <p>Следующий листинг показывет вам, как использовать ограничение <a class="reference internal" href="../reference/constraints/True.html"><em>True</em></a>
+	    для проверки является ли динамически генерируемый токен корректным:</p>
 	  <div class="configuration-block jsactive clearfix">
 	    <ul class="simple" style="height: 148px; ">
 	      <li class="selected"><em><a href="#">YAML</a></em><div class="highlight-yaml" style="width: 690px; display: block; "><div class="highlight"><pre><span class="c1"># Acme/BlogBundle/Resources/config/validation.yml</span>
@@ -535,28 +484,19 @@
 	      </li>
 	    </ul>
 	  </div>
-	  <p>The public <tt class="docutils literal"><span class="pre">isTokenValid</span></tt> method will perform any logic to determine if
-	    the internal token is valid and then return <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+	  <p>Public метод <tt class="docutils literal"><span class="pre">isTokenValid</span></tt> будет выполнять любую логику для определения, валиден ли внутренний токен и затем вернет <tt class="docutils literal"><span class="pre">true</span></tt> или <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
 	  <div class="admonition-wrapper">
-	    <div class="note"></div><div class="admonition admonition-note"><p class="first admonition-title">Note</p>
-	      <p class="last">The keen-eyed among you will have noticed that the prefix of the getter
-		("get" or "is") is omitted in the mapping. This allows you to move the
-		constraint to a property with the same name later (or vice versa) without
-		changing your validation logic.</p>
+	    <div class="note"></div><div class="admonition admonition-note"><p class="first admonition-title">Примечание</p>
+	      <p class="last">Внимательные из вас заметят, что префикс геттера ("get" или "is") опущен в отображении (mapping). Это позволяет вам перемещать ограничение свойства с тем же именем позже (или наоборот) без изменения логики валидации.</p>
 	  </div></div>
 	</div>
       </div>
       <div class="section" id="final-thoughts">
-	<h2>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this headline">¶</a></h2>
-	<p>The Symfony2 <tt class="docutils literal"><span class="pre">validator</span></tt> is a powerful tool that can be leveraged to
-	  guarantee that the data of any object is "valid". The power behind validation
-	  lies in "constraints", which are rules that you can apply to properties or
-	  getter methods of your object. And while you'll most commonly use the validation
-	  framework indirectly when using forms, remember that it can be used anywhere
-	  to validate any object.</p>
+	<h2>Заключительные мысли<a class="headerlink" href="#final-thoughts" title="Permalink to this headline">¶</a></h2>
+	<p>Symfony2 <tt class="docutils literal"><span class="pre">валидатор</span></tt> мощный инструмент, который может быть использован для гарантирования, что данные любого объекта валидны. Мощь валидации заключается в "ограничениях", представляющие собой правила, которые вы можете применить к свойствам или геттер-методам вашего объекта. И пока вы будете использовать фреймворк валидации вместе с формами, помните, что он может быть использован в любом месте для проверки любого объекта.</p>
       </div>
       <div class="section" id="learn-more-from-the-cookbook">
-	<h2>Learn more from the Cookbook<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
+	<h2>Узнайте больше из книги рецептов<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
 	<ul class="simple">
 	  <li><a class="reference internal" href="../cookbook/validation/custom_constraint.html"><em>How to create a Custom Validation Constraint</em></a></li>
 	</ul>
